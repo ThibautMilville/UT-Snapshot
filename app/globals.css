@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    
+    /* Primary colors */
+    --primary: 251 30% 22%;      /* #28274A - Deep Purple */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary colors */
+    --secondary: 290 42% 32%;    /* #622C6C - Royal Purple */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Accent colors */
+    --accent: 270 33% 52%;       /* #8757B2 - Soft Purple */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Highlight colors */
+    --highlight: 280 77% 60%;    /* #AC46E7 - Bright Purple */
+    --highlight-foreground: 0 0% 100%;
+    
+    /* Neutral colors */
+    --muted: 251 30% 22%;
+    --muted-foreground: 0 0% 100%;
+    
+    /* UI colors */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --border: 251 30% 22%;
+    --input: 251 30% 22%;
+    --ring: 251 30% 22%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    
+    /* Primary colors */
+    --primary: 251 30% 22%;      /* #28274A - Deep Purple */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary colors */
+    --secondary: 290 42% 32%;    /* #622C6C - Royal Purple */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Accent colors */
+    --accent: 270 33% 52%;       /* #8757B2 - Soft Purple */
+    --accent-foreground: 0 0% 100%;
+    
+    /* Highlight colors */
+    --highlight: 280 77% 60%;    /* #AC46E7 - Bright Purple */
+    --highlight-foreground: 0 0% 100%;
+    
+    /* Neutral colors */
+    --muted: 251 30% 22%;
+    --muted-foreground: 0 0% 100%;
+    
+    /* UI colors */
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --border: 251 30% 22%;
+    --input: 251 30% 22%;
+    --ring: 251 30% 22%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-cabin {
+    font-family: var(--font-cabin);
+  }
+  .font-quicksand {
+    font-family: var(--font-quicksand);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
