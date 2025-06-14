@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --experimental-https --experimental-https-key ./certs/localhost.key --experimental-https-cert ./certs/localhost.crt",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "create-cert": "chmod +x scripts/create-cert.sh && ./scripts/create-cert.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
