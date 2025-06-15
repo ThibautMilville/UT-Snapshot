@@ -45,11 +45,11 @@ export default function DashboardLayout({
 
       </div>
 
-      <div className="px-4 animate-in slide-in-from-bottom duration-1000 delay-500 mb-10 lg:mb-0">
+      <div className="px-4 animate-in slide-in-from-bottom duration-1000 delay-500">
         <SnapshotHistory />
       </div>
 
-      <div className="mt-4 animate-in slide-in-from-bottom duration-1000 delay-500 mb-10 lg:mb-0">
+      <div className="animate-in slide-in-from-bottom duration-1000 delay-500">
         <Footer />
       </div>
     </div>

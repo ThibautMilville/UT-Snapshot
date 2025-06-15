@@ -4,11 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import Header from "@/components/landing/header";
-import { SnapshotListFixed } from "@/components/dashboard/snapshot/snapshot-list-fixed";
+import ImageVortex from "@/components/landing/image-vortex";
 import Howitworks from "@/components/landing/howitworks";
 import KeyFeytures from "@/components/landing/keyFeytures";
 import Cta from "@/components/landing/cta";
-import { motion } from "framer-motion";
 import Footer from "@/components/footer";
 
 const fadeInUp = {
@@ -24,77 +23,56 @@ const fadeIn = {
 };
 
 export default function Home() {
+  // Images pour le vortex
+  const vortexImages = [
+    "/ultra.png",
+    "/ultra.png",
+    "/ultra.png",
+    "/ultra.png",
+    "/ultra.png",
+  ];
+
   return (
-    <div className="min-h-screen bg-foreground/10 text-white py-10">
-      <Navbar />
-
-      <Header />
-      <motion.div
-        className="relative min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-28 bg-primary/10"
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-foreground/50 to-primary/20 z-10 rounded-b-[50%] md:rounded-b-full w-[160%] md:w-[110%] left-[-30%] md:left-[-5%]" />
-        <div className="absolute inset-0 overflow-hidden -z-10">
-          <div className="absolute -top-20 md:-top-40 -right-20 md:-right-40 w-40 md:w-80 h-40 md:h-80 bg-secondary/80 rounded-full blur-2xl md:blur-3xl" />
+    <main className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#1A1A2E] to-[#16213E] relative overflow-hidden">
+      {/* Effets de fond animés */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-2000" />
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
+        
+        {/* Floating particles */}
+        <div className="absolute inset-0">
+          {[...Array(30)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 3}s`,
+              }}
+            />
+          ))}
         </div>
-        <div className="absolute inset-0 bottom-0">
-          <Image
-            src="/ultra.png"
-            alt="Ultra Background"
-            fill
-            className="object-contain opacity-10"
-            priority
-          />
-        </div>
-        <motion.div
-          className="relative z-20 text-center px-4 max-w-5xl mx-auto"
-          variants={fadeInUp}
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-secondary to-[#8757B2] text-transparent bg-clip-text leading-tight">
-            Automate your snapshots and airdrops on Ultra with ease
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 text-white/80 max-w-3xl mx-auto">
-            Save time, engage your community, and manage your token holders effortlessly
-          </p>
+      </div>
 
-          <div className="w-full max-w-4xl mx-auto">
-            <SnapshotListFixed />
-          </div>
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
+      {/* Contenu principal */}
+      <div className="relative z-10">
+        <Navbar />
+        <Header />
+        <ImageVortex images={vortexImages} />
         <Howitworks />
-      </motion.div>
-
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
         <KeyFeytures />
-      </motion.div>
-
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeIn}
-      >
         <Cta />
-      </motion.div>
+      </div>
 
       <Footer />
-    </div>
+    </main>
   );
 }
 

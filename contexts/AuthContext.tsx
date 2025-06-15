@@ -1,15 +1,8 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { createContext, useContext, ReactNode } from "react"
 import { toast } from "sonner"
-
-interface UltraWalletResponse {
-  status: 'success' | 'error';
-  data: {
-    blockchainid: string;
-    // Ajoutez d'autres propriétés si nécessaire
-  };
-}
+import { useUltraWallet } from "@/hooks/useUltraWallet"
 
 interface AuthContextType {
   isAuthenticated: boolean
@@ -17,72 +10,82 @@ interface AuthContextType {
   walletAddress: string | null
   connectWallet: () => Promise<void>
   disconnectWallet: () => Promise<void>
-}
-
-declare global {
-  interface Window {
-    ultra?: {
-      connect: () => Promise<UltraWalletResponse>;
-      disconnect: () => Promise<void>;
-    };
-  }
+  isInstalled: boolean
+  error: string | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isConnecting, setIsConnecting] = useState(false)
-  const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const {
+    isInstalled,
+    isConnected,
+    isLoading,
+    error,
+    blockchainId,
+    connect,
+    disconnect,
+  } = useUltraWallet()
 
-  const connectWallet = async () => {
+  const connectWallet = async (): Promise<void> => {
     try {
-      setIsConnecting(true)
-
-      if (!window.ultra) {
+      console.log('🔗 AuthContext: Starting wallet connection...')
+      console.log('📱 Wallet installed:', isInstalled)
+      console.log('🌐 Window.ultra available:', !!window.ultra)
+      
+      if (!isInstalled) {
+        console.log('❌ Ultra Wallet not installed')
         toast.error("Extension not found", {
           description: "Please install the Ultra Wallet extension to continue.",
           action: {
             label: "Install Extension",
-            onClick: () => window.open('https://chromewebstore.google.com/detail/ultra-wallet/kjjebdkfeagdoogagbhepmbimaphnfln?hl=en%20(', '_blank')
+            onClick: () => window.open('https://chromewebstore.google.com/detail/ultra-wallet/kjjebdkfeagdoogagbhepmbimaphnfln?hl=en', '_blank')
           },
           duration: 5000,
         })
         return
       }
 
-      const result = await window.ultra.connect()
+      console.log('🚀 Calling connect function...')
+      const success = await connect().catch((err) => {
+        console.error('Connect function error:', err)
+        return false
+      })
       
-      if (result.status === 'success' && result.data) {
-        setIsAuthenticated(true)
-        setWalletAddress(result.data.blockchainid)
+      console.log('✅ Connect result:', success)
+      console.log('🆔 Blockchain ID:', blockchainId)
+      
+      if (success) {
+        console.log('✅ AuthContext: Wallet connected successfully')
         toast.success("Wallet Connected", {
-          description: `Successfully connected to account ${result.data.blockchainid}`,
+          description: `Successfully connected to account ${blockchainId}`,
           duration: 3000,
         })
       } else {
+        console.warn('⚠️ AuthContext: Wallet connection failed')
+        console.log('❌ Connection failed, error:', error)
         toast.error("Connection Failed", {
-          description: "No account found in your wallet.",
+          description: error || "Failed to connect to wallet.",
           duration: 3000,
         })
       }
     } catch (err) {
+      console.error('❌ AuthContext: Wallet connection error:', err)
       toast.error("Connection Error", {
         description: err instanceof Error ? err.message : "Failed to connect wallet",
         duration: 3000,
       })
-      console.error("Wallet connection error:", err)
-    } finally {
-      setIsConnecting(false)
     }
   }
 
-  const disconnectWallet = async () => {
+  const disconnectWallet = async (): Promise<void> => {
     try {
-      if (window.ultra) {
-        await window.ultra.disconnect()
-        setIsAuthenticated(false)
-        setWalletAddress(null)
+      const success = await disconnect().catch((err) => {
+        console.error('Disconnect function error:', err)
+        return false
+      })
+      
+      if (success) {
         toast.success("Wallet Disconnected", {
           description: "Your wallet has been successfully disconnected.",
           duration: 3000,
@@ -97,32 +100,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  useEffect(() => {
-    const checkConnection = async () => {
-      if (window.ultra) {
-        try {
-          const result = await window.ultra.connect()
-          if (result.status === 'success' && result.data) {
-            setIsAuthenticated(true)
-            setWalletAddress(result.data.blockchainid)
-          }
-        } catch (err) {
-          console.error("Failed to check wallet connection:", err)
-        }
-      }
-    }
-
-    checkConnection()
-  }, [])
-
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
-        isConnecting,
-        walletAddress,
+        isAuthenticated: isConnected,
+        isConnecting: isLoading,
+        walletAddress: blockchainId,
         connectWallet,
         disconnectWallet,
+        isInstalled,
+        error,
       }}
     >
       {children}

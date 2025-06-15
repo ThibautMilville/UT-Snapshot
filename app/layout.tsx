@@ -19,6 +19,16 @@ const quicksand = Quicksand({
 export const metadata: Metadata = {
   title: "UltraTimes Snapshots",
   description: "Web3 Snapshots Platform",
+  icons: {
+    icon: [
+      { url: '/ultra.png', sizes: '32x32', type: 'image/png' },
+      { url: '/ultra.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/ultra.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/ultra.png',
+  },
 }
 
 export default function RootLayout({
@@ -28,6 +38,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" type="image/png" sizes="32x32" href="/ultra.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/ultra.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/ultra.png" />
+        <link rel="shortcut icon" href="/ultra.png" />
+      </head>
       <body className={`${cabin.variable} ${quicksand.variable} font-quicksand bg-foreground min-h-screen`}>
         <Loading />
         <AuthProvider>

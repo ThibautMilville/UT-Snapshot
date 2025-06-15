@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useState, useEffect } from "react"
 
 interface ImageVortexProps {
   images: string[]
@@ -9,8 +10,66 @@ interface ImageVortexProps {
   speed?: number
 }
 
+interface AnimationValues {
+  initialX: number
+  initialY: number
+  initialZ: number
+  initialRotateX: number
+  initialRotateY: number
+  initialRotateZ: number
+}
+
 const ImageVortex = ({ images, size = 400, speed = 10 }: ImageVortexProps) => {
   const containerSize = size * 1.5
+  const [animationValues, setAnimationValues] = useState<AnimationValues[]>([])
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+    // Générer les valeurs aléatoires uniquement côté client
+    const values = images.map(() => ({
+      initialX: (Math.random() - 0.5) * containerSize,
+      initialY: (Math.random() - 0.5) * containerSize,
+      initialZ: Math.random() * 100 - 50,
+      initialRotateX: Math.random() * 360,
+      initialRotateY: Math.random() * 360,
+      initialRotateZ: Math.random() * 360,
+    }))
+    setAnimationValues(values)
+  }, [images.length, containerSize])
+
+  // Ne pas rendre le composant tant que nous ne sommes pas côté client
+  if (!isClient || animationValues.length === 0) {
+    return (
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none perspective-1000"
+        style={{ opacity: 0.2 }}
+      >
+        {images.map((image, index) => (
+          <div
+            key={index}
+            className="absolute"
+            style={{
+              width: size / 6,
+              height: size / 6,
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <div className="relative w-full h-full rounded-lg overflow-hidden shadow-xl transform-gpu">
+              <Image
+                src={image}
+                alt={`Image ${index}`}
+                fill
+                className="object-cover"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div
@@ -18,12 +77,8 @@ const ImageVortex = ({ images, size = 400, speed = 10 }: ImageVortexProps) => {
       style={{ opacity: 0.2 }}
     >
       {images.map((image, index) => {
-        const initialX = (Math.random() - 0.5) * containerSize
-        const initialY = (Math.random() - 0.5) * containerSize
-        const initialZ = Math.random() * 100 - 50
-        const initialRotateX = Math.random() * 360
-        const initialRotateY = Math.random() * 360
-        const initialRotateZ = Math.random() * 360
+        const values = animationValues[index]
+        if (!values) return null
 
         return (
           <motion.div
@@ -37,36 +92,36 @@ const ImageVortex = ({ images, size = 400, speed = 10 }: ImageVortexProps) => {
               transform: 'translate(-50%, -50%)',
             }}
             initial={{
-              x: initialX,
-              y: initialY,
-              z: initialZ,
-              rotateX: initialRotateX,
-              rotateY: initialRotateY,
-              rotateZ: initialRotateZ,
+              x: values.initialX,
+              y: values.initialY,
+              z: values.initialZ,
+              rotateX: values.initialRotateX,
+              rotateY: values.initialRotateY,
+              rotateZ: values.initialRotateZ,
               scale: 0.8,
             }}
             animate={{
               x: [
-                initialX,
-                initialX + (Math.random() - 0.5) * 100,
-                initialX - (Math.random() - 0.5) * 100,
-                initialX,
+                values.initialX,
+                values.initialX + (Math.random() - 0.5) * 100,
+                values.initialX - (Math.random() - 0.5) * 100,
+                values.initialX,
               ],
               y: [
-                initialY,
-                initialY + (Math.random() - 0.5) * 100,
-                initialY - (Math.random() - 0.5) * 100,
-                initialY,
+                values.initialY,
+                values.initialY + (Math.random() - 0.5) * 100,
+                values.initialY - (Math.random() - 0.5) * 100,
+                values.initialY,
               ],
               z: [
-                initialZ,
-                initialZ + (Math.random() - 0.5) * 50,
-                initialZ - (Math.random() - 0.5) * 50,
-                initialZ,
+                values.initialZ,
+                values.initialZ + (Math.random() - 0.5) * 50,
+                values.initialZ - (Math.random() - 0.5) * 50,
+                values.initialZ,
               ],
-              rotateX: [initialRotateX, initialRotateX + 180, initialRotateX + 360],
-              rotateY: [initialRotateY, initialRotateY + 180, initialRotateY + 360],
-              rotateZ: [initialRotateZ, initialRotateZ + 180, initialRotateZ + 360],
+              rotateX: [values.initialRotateX, values.initialRotateX + 180, values.initialRotateX + 360],
+              rotateY: [values.initialRotateY, values.initialRotateY + 180, values.initialRotateY + 360],
+              rotateZ: [values.initialRotateZ, values.initialRotateZ + 180, values.initialRotateZ + 360],
               scale: [0.8, 1, 0.8],
             }}
             transition={{

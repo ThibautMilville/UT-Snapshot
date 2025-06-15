@@ -1,135 +1,51 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
-import { ArrowRight, Clock, Settings, Zap, CheckCircle2, ChevronRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Zap, Settings, Rocket, ArrowRight, CheckCircle } from 'lucide-react';
 
 const HowItWorks = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-
-    const particles: { x: number; y: number; size: number; speedX: number; speedY: number }[] = []
-    const particleCount = 50
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
-        speedX: Math.random() * 0.5 - 0.25,
-        speedY: Math.random() * 0.5 - 0.25
-      })
-    }
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
-      particles.forEach(particle => {
-        ctx.fillStyle = 'rgba(172, 70, 231, 0.2)'
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
-        ctx.fill()
-
-        particle.x += particle.speedX
-        particle.y += particle.speedY
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1
-        if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1
-      })
-
-      requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   const steps = [
     {
-      icon: <Clock className="w-12 h-12" />,
-      title: "Schedule Your Snapshots",
-      description: "Configure your snapshots with an intuitive interface. Set frequency, conditions, and parameters according to your needs.",
-      features: [
-        "Flexible scheduling (daily, weekly, monthly)",
-        "Customizable conditions",
-        "Real-time notifications",
-        "Complete snapshot history",
-        "CSV data export"
-      ],
-      benefits: [
-        "Significant time savings",
-        "Reduced human errors",
-        "Accurate holder tracking"
-      ]
+      icon: Zap,
+      title: "Connect",
+      description: "Connect your Ultra wallet and access your Factory Manager space with one click.",
+      details: ["Secure wallet integration", "Instant access", "No setup required"],
+      color: "from-blue-500 to-cyan-500",
+      delay: 0.1
     },
     {
-      icon: <Settings className="w-12 h-12" />,
-      title: "Customize Your Conditions",
-      description: "Create complex rules to precisely target your token holders. Use logical operators and time-based conditions.",
-      features: [
-        "Logical operators (AND, OR, NOT)",
-        "Time-based conditions",
-        "Advanced filters",
-        "Holding conditions",
-        "Customizable thresholds"
-      ],
-      benefits: [
-        "Precise targeting",
-        "Maximum flexibility",
-        "Adaptation to your needs"
-      ]
+      icon: Settings,
+      title: "Configure",
+      description: "Set up your snapshot parameters and airdrop conditions with our intuitive interface.",
+      details: ["Custom parameters", "Smart conditions", "Real-time preview"],
+      color: "from-purple-500 to-pink-500",
+      delay: 0.2
     },
     {
-      icon: <Zap className="w-12 h-12" />,
-      title: "Automate Your Airdrops",
-      description: "Automatically execute your airdrops based on snapshots. Manage your UNIQ and UOS token distributions with ease.",
-      features: [
-        "Automatic distribution",
-        "Multi-token support",
-        "Real-time tracking",
-        "Detailed reports",
-        "Ultra integration"
-      ],
-      benefits: [
-        "Automated process",
-        "Complete transparency",
-        "Cost savings"
-      ]
+      icon: Rocket,
+      title: "Automate",
+      description: "Launch your jobs and let Ultra-Times handle your snapshots and airdrops automatically.",
+      details: ["Automated execution", "Real-time monitoring", "Instant notifications"],
+      color: "from-orange-500 to-red-500",
+      delay: 0.3
     }
-  ]
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3
+        staggerChildren: 0.2,
+        delayChildren: 0.1
       }
     }
-  }
+  };
 
-  const cardVariants = {
-    hidden: { 
-      opacity: 0,
-      y: 50
-    },
-    visible: { 
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
       opacity: 1,
       y: 0,
       transition: {
@@ -137,109 +53,157 @@ const HowItWorks = () => {
         ease: "easeOut"
       }
     }
-  }
+  };
 
   return (
-    <section className="py-24 bg-primary/10 relative overflow-hidden">
-      <canvas 
-        ref={canvasRef} 
-        className="absolute top-0 left-0 w-full h-full"
-        style={{ zIndex: 0 }}
-      />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 1 }}>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-highlight bg-clip-text mb-4">
-            How It Works
-          </h2>
-          <p className="text-md text-white max-w-2xl mx-auto">
-            A simple and powerful solution to manage your snapshots and airdrops on Ultra
-          </p>
-        </motion.div>
+    <section className="relative py-24 md:py-32 overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      </div>
 
-        <motion.div 
+      <div className="relative z-10 container mx-auto px-4 md:px-8">
+        <motion.div
+          className="text-center mb-16 md:mb-20"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-3 gap-8"
+          viewport={{ once: true }}
+        >
+          <motion.div variants={itemVariants}>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary/20 to-purple-500/20 backdrop-blur-sm border border-secondary/30 rounded-full px-6 py-3 text-sm font-medium text-white/90 mb-6">
+              <Zap className="w-4 h-4 text-secondary" />
+              <span>How It Works</span>
+            </div>
+          </motion.div>
+
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold mb-6"
+            variants={itemVariants}
+          >
+            <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
+              Simple Steps to
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-secondary via-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Automate Everything
+            </span>
+          </motion.h2>
+
+          <motion.p 
+            className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed"
+            variants={itemVariants}
+          >
+            Get started with Ultra-Times in just three simple steps. No complex setup, no technical knowledge required.
+          </motion.p>
+        </motion.div>
+
+        {/* Steps */}
+        <motion.div
+          className="grid md:grid-cols-3 gap-8 md:gap-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
           {steps.map((step, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              variants={cardVariants}
-              className="group relative bg-foreground/50 p-8 rounded-2xl border border-white/10 hover:border-[#AC46E7]/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(172,70,231,0.2)]"
+              className="relative group"
+              variants={itemVariants}
+              whileHover={{ y: -10 }}
+              transition={{ duration: 0.3 }}
             >
-              <div className="absolute -top-4 left-8 bg-highlight text-white px-4 py-1 rounded-full text-sm font-semibold">
-                Step {index + 1}
-              </div>
-              
-              <div className="text-[#AC46E7] mb-6 group-hover:scale-110 transition-transform duration-300">
-                {step.icon}
-              </div>
-              
-              <h3 className="text-2xl font-bold text-white mb-4">
-                {step.title}
-              </h3>
-              
-              <p className="text-white/70 mb-6">
-                {step.description}
-              </p>
-              
-              <div className="space-y-6">
-                <div>
-                  <h4 className="text-white font-semibold mb-3 flex items-center">
-                    <CheckCircle2 className="w-4 h-4 text-[#AC46E7] mr-2" />
-                    Features
-                  </h4>
-                  <ul className="space-y-3">
-                    {step.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-white/80">
-                        <ChevronRight className="w-4 h-4 text-[#AC46E7] mr-2" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+              {/* Connection Line */}
+              {index < steps.length - 1 && (
+                <div className="hidden md:block absolute top-1/2 -right-6 transform -translate-y-1/2 z-10">
+                  <motion.div
+                    className="flex items-center"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: step.delay + 0.5, duration: 0.6 }}
+                  >
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-white/30 to-transparent" />
+                    <ArrowRight className="w-5 h-5 text-white/30 ml-2" />
+                  </motion.div>
+                </div>
+              )}
+
+              {/* Card */}
+              <div className="relative h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl border border-white/20 p-8 group-hover:border-white/40 transition-all duration-300">
+                {/* Glow Effect */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${step.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10`} />
+
+                {/* Step Number */}
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-secondary to-purple-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  {index + 1}
                 </div>
 
-                <div>
-                  <h4 className="text-white font-semibold mb-3 flex items-center">
-                    <CheckCircle2 className="w-4 h-4 text-[#AC46E7] mr-2" />
-                    Benefits
-                  </h4>
-                  <ul className="space-y-3">
-                    {step.benefits.map((benefit, benefitIndex) => (
-                      <li key={benefitIndex} className="flex items-center text-white/80">
-                        <ChevronRight className="w-4 h-4 text-[#AC46E7] mr-2" />
-                        {benefit}
-                      </li>
+                {/* Icon */}
+                <motion.div 
+                  className={`w-16 h-16 bg-gradient-to-r ${step.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  whileHover={{ rotate: 5 }}
+                >
+                  <step.icon className="w-8 h-8 text-white" />
+                </motion.div>
+
+                {/* Content */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-secondary transition-colors duration-300">
+                    {step.title}
+                  </h3>
+                  
+                  <p className="text-white/70 leading-relaxed">
+                    {step.description}
+                  </p>
+
+                  {/* Features List */}
+                  <div className="space-y-2 pt-4">
+                    {step.details.map((detail, detailIndex) => (
+                      <motion.div
+                        key={detailIndex}
+                        className="flex items-center gap-3 text-sm text-white/60"
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: step.delay + 0.1 * detailIndex }}
+                      >
+                        <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                        <span>{detail}</span>
+                      </motion.div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
+
+                {/* Hover Effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-secondary/5 via-transparent to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+        {/* Bottom CTA */}
+        <motion.div
+          className="text-center mt-16 md:mt-20"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 text-center"
+          transition={{ delay: 0.6, duration: 0.8 }}
+          viewport={{ once: true }}
         >
-          <button className="bg-[#AC46E7] hover:bg-[#8757B2] text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-[0_0_15px_rgba(172,70,231,0.3)] hover:shadow-[0_0_25px_rgba(172,70,231,0.5)] hover:scale-105">
-            Get Started Now
-          </button>
+          <motion.button
+            className="group relative bg-gradient-to-r from-secondary to-purple-600 hover:from-secondary/90 hover:to-purple-600/90 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(172,70,231,0.3)] hover:shadow-[0_0_40px_rgba(172,70,231,0.5)] flex items-center justify-center gap-3 mx-auto"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <Rocket className="w-5 h-5" />
+            <span>Get Started Now</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+          </motion.button>
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HowItWorks
+export default HowItWorks;
