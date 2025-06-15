@@ -150,7 +150,7 @@ const HowItWorks = () => {
 
                 {/* Content */}
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-white group-hover:text-secondary transition-colors duration-300">
+                  <h3 className="text-2xl font-bold text-white group-hover:text-white transition-colors duration-300">
                     {step.title}
                   </h3>
                   

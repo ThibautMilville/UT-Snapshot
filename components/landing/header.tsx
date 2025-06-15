@@ -262,14 +262,39 @@ const Header = () => {
                                 <div className="absolute inset-0 bg-gradient-to-r from-secondary/30 to-purple-500/30 rounded-full blur-3xl scale-110" />
                                 
                                 {/* Main Image */}
-                                <div className="relative w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl border border-white/20 overflow-hidden">
-                                    <Image
-                                        src="/ultra.png"
-                                        alt="Ultra Snapshot Platform"
-                                        fill
-                                        className="object-contain p-8 drop-shadow-2xl"
-                                        priority
-                                    />
+                                <div className="relative w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-3xl border border-white/20 overflow-hidden flex items-center justify-center">
+                                    <div className="relative w-64 h-64 md:w-80 md:h-80">
+                                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-2xl" />
+                                        <div className="relative w-full h-full bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-full border border-purple-400/30 flex items-center justify-center">
+                                            <Camera className="w-24 h-24 md:w-32 md:h-32 text-white drop-shadow-2xl" />
+                                        </div>
+                                        
+                                        {/* Orbiting elements */}
+                                        <motion.div 
+                                            className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center"
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                                        >
+                                            <Zap className="w-4 h-4 text-white" />
+                                        </motion.div>
+                                        
+                                        <motion.div 
+                                            className="absolute bottom-4 left-4 w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center"
+                                            animate={{ rotate: -360 }}
+                                            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                                        >
+                                            <Sparkles className="w-3 h-3 text-white" />
+                                        </motion.div>
+                                        
+                                        <motion.div 
+                                            className="absolute top-1/2 left-0 w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full"
+                                            animate={{ 
+                                                scale: [1, 1.2, 1],
+                                                opacity: [0.7, 1, 0.7]
+                                            }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                        />
+                                    </div>
                                     
                                     {/* Overlay Effects */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 via-transparent to-purple-500/20" />
@@ -313,14 +338,6 @@ const Header = () => {
                                         <span className="text-sm font-semibold">Auto Airdrops</span>
                                     </div>
                                 </motion.div>
-                            </motion.div>
-
-                            {/* Collaborators */}
-                            <motion.div 
-                                className="absolute -bottom-16 left-1/2 transform -translate-x-1/2"
-                                variants={itemVariants}
-                            >
-                                <Collaborators />
                             </motion.div>
                         </div>
                     </motion.div>

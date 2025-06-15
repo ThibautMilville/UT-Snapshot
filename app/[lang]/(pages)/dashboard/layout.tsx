@@ -3,7 +3,7 @@
 import { Sidebar } from "@/components/dashboard/sidebar";
 import { RightSidebar } from "@/components/dashboard/right-sidebar";
 import { SnapshotHistory } from "@/components/dashboard/snapshot/snapshot-history";
-import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Footer from "@/components/footer";

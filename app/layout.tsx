@@ -4,7 +4,7 @@ import { Cabin, Quicksand } from "next/font/google"
 import "./globals.css"
 import { Loading } from "@/components/loading"
 import { Toaster } from "@/components/ui/sonner"
-import { AuthProvider } from "@/contexts/AuthContext"
+
 
 const cabin = Cabin({
   subsets: ["latin"],
@@ -17,17 +17,17 @@ const quicksand = Quicksand({
 })
 
 export const metadata: Metadata = {
-  title: "UltraTimes Snapshots",
-  description: "Web3 Snapshots Platform",
+  title: "UT Snapshot - By Ultra Times",
+  description: "Plateforme automatisée de snapshots Web3 pour la blockchain Ultra",
   icons: {
     icon: [
-      { url: '/ultra.png', sizes: '32x32', type: 'image/png' },
-      { url: '/ultra.png', sizes: '16x16', type: 'image/png' },
+      { url: '/logo-ut.png', sizes: '32x32', type: 'image/png' },
+      { url: '/logo-ut.png', sizes: '16x16', type: 'image/png' },
     ],
     apple: [
-      { url: '/ultra.png', sizes: '180x180', type: 'image/png' },
+      { url: '/logo-ut.png', sizes: '180x180', type: 'image/png' },
     ],
-    shortcut: '/ultra.png',
+    shortcut: '/logo-ut.png',
   },
 }
 
@@ -39,16 +39,14 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
-        <link rel="icon" type="image/png" sizes="32x32" href="/ultra.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/ultra.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/ultra.png" />
-        <link rel="shortcut icon" href="/ultra.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/logo-ut.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/logo-ut.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo-ut.png" />
+        <link rel="shortcut icon" href="/logo-ut.png" />
       </head>
       <body className={`${cabin.variable} ${quicksand.variable} font-quicksand bg-foreground min-h-screen`}>
         <Loading />
-        <AuthProvider>
           {children}
-        </AuthProvider>
         <Toaster
           position="bottom-right"
           toastOptions={{

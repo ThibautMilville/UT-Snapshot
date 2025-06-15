@@ -11,20 +11,50 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/faq/page": [
+    "/[lang]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/faq/page.js"
+      "static/chunks/app/[lang]/layout.js"
     ],
-    "/dashboard/layout": [
+    "/[lang]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/layout.js"
+      "static/chunks/app/[lang]/page.js"
     ],
-    "/dashboard/page": [
+    "/[lang]/(pages)/faq/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/dashboard/page.js"
+      "static/chunks/app/[lang]/(pages)/faq/page.js"
+    ],
+    "/[lang]/(pages)/analytics/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/analytics/page.js"
+    ],
+    "/[lang]/(pages)/snapshots/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/snapshots/page.js"
+    ],
+    "/[lang]/(pages)/dashboard/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/dashboard/layout.js"
+    ],
+    "/[lang]/(pages)/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/dashboard/page.js"
+    ],
+    "/[lang]/(pages)/dashboard/history/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/dashboard/history/page.js"
+    ],
+    "/[lang]/(pages)/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[lang]/(pages)/profile/page.js"
     ]
   }
 }

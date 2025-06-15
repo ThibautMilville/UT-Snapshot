@@ -1,0 +1,6 @@
+export { default as Header } from './header'
+export { default as ImageVortex } from './image-vortex'
+export { default as HowItWorks } from './howitworks'
+export { default as KeyFeatures } from './keyFeytures'
+export { default as CTA } from './cta'
+export { default as Collaborators } from './collaborators' 
