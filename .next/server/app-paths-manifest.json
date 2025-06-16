@@ -1,8 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/[lang]/page": "app/[lang]/page.js",
-  "/[lang]/(pages)/faq/page": "app/[lang]/(pages)/faq/page.js",
-  "/[lang]/(pages)/profile/page": "app/[lang]/(pages)/profile/page.js",
-  "/[lang]/(pages)/analytics/page": "app/[lang]/(pages)/analytics/page.js",
-  "/[lang]/(pages)/snapshots/page": "app/[lang]/(pages)/snapshots/page.js"
-}
