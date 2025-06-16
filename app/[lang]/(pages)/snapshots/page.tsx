@@ -282,7 +282,7 @@ const getStatusText = (status: string) => {
 }
 
 export default function SnapshotsPage() {
-  const { t } = useTranslation()
+  const { t, currentLang } = useTranslation()
   const { requireAuth, loading, isAuthenticated } = useAuth()
   
   // Tous les hooks useState doivent être appelés avant toute condition de retour
@@ -338,7 +338,7 @@ export default function SnapshotsPage() {
   }
 
   const handleCopyLink = async (snapshotId: number) => {
-    const url = `${window.location.origin}/snapshots/${snapshotId}`
+    const url = `${window.location.origin}/${currentLang}/snapshots/${snapshotId}`
     await navigator.clipboard.writeText(url)
   }
 
@@ -348,7 +348,7 @@ export default function SnapshotsPage() {
   }
 
   const handleViewExternal = (snapshotId: number) => {
-    window.open(`/snapshots/${snapshotId}`, '_blank')
+    window.open(`/${currentLang}/snapshots/${snapshotId}`, '_blank')
   }
 
   const filteredSnapshots = mockSnapshots.filter(snapshot => {
@@ -371,12 +371,13 @@ export default function SnapshotsPage() {
   }
 
   const SnapshotCard = ({ snapshot }: { snapshot: typeof mockSnapshots[0] }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -5, scale: 1.02 }}
-      className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/10 hover:border-purple-500/30 transition-all duration-500 overflow-hidden cursor-pointer h-[340px] flex flex-col"
-    >
+    <Link href={`/${currentLang}/snapshots/${snapshot.id}`} className="block">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5, scale: 1.02 }}
+        className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-2xl border border-white/10 hover:border-purple-500/30 transition-all duration-500 overflow-hidden cursor-pointer h-[340px] flex flex-col"
+      >
       {/* Glow effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/5 to-pink-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
@@ -403,7 +404,11 @@ export default function SnapshotsPage() {
             <Button 
               size="sm" 
               variant="ghost" 
-              onClick={() => handleCopySettings(snapshot)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleCopySettings(snapshot);
+              }}
               className="h-7 w-7 sm:h-8 sm:w-8 p-0 hover:bg-white/10 text-gray-400 hover:text-purple-300"
               title={t('snapshots.duplicate')}
             >
@@ -412,7 +417,11 @@ export default function SnapshotsPage() {
             <Button 
               size="sm" 
               variant="ghost" 
-              onClick={() => handleViewExternal(snapshot.id)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleViewExternal(snapshot.id);
+              }}
               className="h-7 w-7 sm:h-8 sm:w-8 p-0 hover:bg-white/10 text-gray-400 hover:text-blue-300"
             >
               <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -469,21 +478,23 @@ export default function SnapshotsPage() {
 
         {/* Actions */}
         <div className="flex gap-2 mt-auto">
-          <Link href={`/snapshots/${snapshot.id}`} className="flex-1">
-            <Button
-              size="sm"
-              className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xs sm:text-sm"
-            >
-              <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-              <span className="hidden sm:inline">{t('snapshots.view')}</span>
-              <span className="sm:hidden">Voir</span>
-            </Button>
-          </Link>
+          <Button
+            size="sm"
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white text-xs sm:text-sm flex-1"
+          >
+            <Eye className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">{t('snapshots.view')}</span>
+            <span className="sm:hidden">Voir</span>
+          </Button>
           {snapshot.status === 'completed' && (
             <Button
               size="sm"
               variant="outline"
-              onClick={() => handleDownload(snapshot.id)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDownload(snapshot.id);
+              }}
               disabled={downloadingIds.includes(snapshot.id)}
               className="border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:text-purple-200 transition-all duration-300 disabled:opacity-50 shadow-sm"
             >
@@ -497,6 +508,7 @@ export default function SnapshotsPage() {
         </div>
       </div>
     </motion.div>
+    </Link>
   )
 
   return (
@@ -656,7 +668,7 @@ export default function SnapshotsPage() {
                           </div>
                           <span className="text-gray-400 text-sm">{snapshot.holders.toLocaleString()} {t('snapshots.holders').toLowerCase()}</span>
                           <div className="flex gap-2">
-                            <Link href={`/snapshots/${snapshot.id}`}>
+                            <Link href={`/${currentLang}/snapshots/${snapshot.id}`}>
                               <Button size="sm" variant="outline" className="border-white/20 hover:bg-white/10">
                                 <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                                 <span className="ml-1 sm:ml-2 hidden sm:inline">{t('snapshots.view')}</span>

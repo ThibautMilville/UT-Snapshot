@@ -118,7 +118,7 @@ const Header = () => {
                             whileTap={{ scale: 0.95 }}
                         >
                             <Sparkles className="w-4 h-4 text-secondary" />
-                            <span>Powered by Ultra Blockchain</span>
+                            <span>{t('landing.badge')}</span>
                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                         </motion.div>
 
@@ -126,15 +126,15 @@ const Header = () => {
                         <motion.div variants={itemVariants}>
                             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
                                 <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-                                    Automate your
+                                    {t('landing.hero.title.part1')}
                                 </span>
                                 <br />
                                 <span className="bg-gradient-to-r from-secondary via-purple-400 to-blue-400 bg-clip-text text-transparent">
-                                    Snapshots & Airdrops
+                                    {t('landing.hero.title.part2')}
                                 </span>
                                 <br />
                                 <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-                                    on Ultra
+                                    {t('landing.hero.title.part3')}
                                 </span>
                             </h1>
                         </motion.div>
@@ -144,7 +144,7 @@ const Header = () => {
                             className="text-lg md:text-xl text-white/70 max-w-2xl leading-relaxed"
                             variants={itemVariants}
                         >
-                            Save time, engage your community, and manage your token holders effortlessly with our advanced automation platform.
+                            {t('landing.hero.subtitle')}
                         </motion.p>
 
                         {/* Features List */}
@@ -153,9 +153,9 @@ const Header = () => {
                             variants={itemVariants}
                         >
                             {[
-                                { icon: Zap, text: "Instant Automation" },
-                                { icon: Shield, text: "Secure & Reliable" },
-                                { icon: Sparkles, text: "Easy to Use" }
+                                { icon: Zap, text: t('landing.features.automation') },
+                                { icon: Shield, text: t('landing.features.security') },
+                                { icon: Sparkles, text: t('landing.features.usability') }
                             ].map((feature, index) => (
                                 <div key={index} className="flex items-center gap-2 text-white/60">
                                     <feature.icon className="w-5 h-5 text-secondary" />
@@ -182,12 +182,12 @@ const Header = () => {
                                         {isConnecting ? (
                                             <>
                                                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                                <span>Connecting...</span>
+                                                <span>{t('landing.connecting')}</span>
                                             </>
                                         ) : (
                                             <>
                                                 <Wallet className="w-5 h-5" />
-                                                <span>Connect Ultra Wallet</span>
+                                                <span>{t('landing.connectWallet')}</span>
                                             </>
                                         )}
                                     </motion.button>
@@ -199,7 +199,7 @@ const Header = () => {
                                             whileTap={{ scale: 0.98 }}
                                         >
                                             <Camera className="w-5 h-5" />
-                                            <span>Try Demo</span>
+                                            <span>{t('landing.tryDemo')}</span>
                                         </motion.button>
                                     </Link>
                                 </>
@@ -213,7 +213,7 @@ const Header = () => {
                                         >
                                             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                             <Camera size={20} />
-                                            <span>View Snapshots</span>
+                                            <span>{t('snapshots.view')}</span>
                                         </motion.button>
                                     </Link>
                                     
@@ -224,7 +224,7 @@ const Header = () => {
                                             whileTap={{ scale: 0.98 }}
                                         >
                                             <Camera size={20} />
-                                            <span>Create Snapshot</span>
+                                            <span>{t('landing.createSnapshot')}</span>
                                         </motion.button>
                                     </Link>
                                 </>
@@ -237,9 +237,9 @@ const Header = () => {
                             variants={itemVariants}
                         >
                             {[
-                                { number: "10K+", label: "Snapshots Created" },
-                                { number: "50M+", label: "Tokens Distributed" },
-                                { number: "99.9%", label: "Uptime" }
+                                { number: "10K+", label: t('landing.stats.snapshots') },
+                                { number: "50M+", label: t('landing.stats.tokens') },
+                                { number: "99.9%", label: t('landing.stats.uptime') }
                             ].map((stat, index) => (
                                 <div key={index} className="text-center">
                                     <div className="text-2xl md:text-3xl font-bold text-white">{stat.number}</div>
@@ -318,7 +318,7 @@ const Header = () => {
                                 >
                                     <div className="flex items-center gap-1 sm:gap-2 text-white">
                                         <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-300 rounded-full animate-pulse" />
-                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Live Snapshots</span>
+                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">{t('landing.floatingCards.live')}</span>
                                     </div>
                                 </motion.div>
 
@@ -337,7 +337,7 @@ const Header = () => {
                                 >
                                     <div className="flex items-center gap-1 sm:gap-2 text-white">
                                         <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-300 rounded-full animate-pulse" />
-                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Auto Airdrops</span>
+                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">{t('landing.floatingCards.auto')}</span>
                                     </div>
                                 </motion.div>
                             </motion.div>
