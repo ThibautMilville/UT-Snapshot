@@ -1,4 +1,4 @@
-import { Sparkles, Camera, BarChart3, HelpCircle } from "lucide-react"
+import { Sparkles, Camera, BarChart3, Mail } from "lucide-react"
 
 export const NAV_ITEMS = [
   { 
@@ -17,9 +17,9 @@ export const NAV_ITEMS = [
     icon: BarChart3 
   },
   { 
-    href: "/faq", 
-    labelKey: "nav.faq", 
-    icon: HelpCircle 
+    href: "/contact", 
+    labelKey: "nav.contact", 
+    icon: Mail 
   },
 ] as const
 
@@ -28,7 +28,7 @@ export const ROUTES = {
   SNAPSHOTS: "/snapshots",
   ANALYTICS: "/analytics",
   FAQ: "/faq",
-  DASHBOARD: "/dashboard",
+  CONTACT: "/contact",
   PROFILE: "/profile",
-  HISTORY: "/dashboard/history",
+  HISTORY: "/history",
 } as const 

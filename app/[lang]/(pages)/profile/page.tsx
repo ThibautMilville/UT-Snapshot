@@ -32,11 +32,15 @@ import { PageLayout } from "@/components/layout/PageLayout"
 import { BadgeSystem } from "@/components/profile/BadgeSystem"
 import { useAuth } from "@/contexts/AuthContext"
 import { useTranslation } from "@/contexts/TranslationContext"
+import { TransferUOSModal } from "@/components/modals/TransferUOSModal"
+import { PurchaseUOSModal } from "@/components/modals/PurchaseUOSModal"
 
 export default function ProfilePage() {
   const { isAuthenticated, walletAddress } = useAuth()
   const { t } = useTranslation()
   const [isEditing, setIsEditing] = useState(false)
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false)
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
   const [profile, setProfile] = useState({
     displayName: "Factory Manager",
     email: "manager@ultra.io",
@@ -45,6 +49,7 @@ export default function ProfilePage() {
     currentXP: 2847,
     nextLevelXP: 3500,
     joinDate: "2024-01-15",
+    uosBalance: 1234.56,
     notifications: {
       email: true,
       push: false,
@@ -417,6 +422,107 @@ export default function ProfilePage() {
                   </CardContent>
                 </Card>
 
+                {/* Transfert UOS */}
+                <Card className="bg-black/40 backdrop-blur-xl border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Wallet className="h-5 w-5 text-yellow-400" />
+                      Transfert UOS
+                    </CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Transférez des UOS via Ultra Times ou carte bancaire
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {/* Solde actuel */}
+                    <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-xl p-4 border border-yellow-500/20">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-gray-400">Solde UOS</p>
+                          <p className="text-2xl font-bold text-white">{profile.uosBalance.toLocaleString()} UOS</p>
+                        </div>
+                        <div className="bg-yellow-500/20 rounded-xl p-3">
+                          <Coins className="h-6 w-6 text-yellow-400" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Options de transfert */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Ultra Times Wallet */}
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-xl p-4 border border-purple-500/20 cursor-pointer hover:border-purple-400/40 transition-all flex flex-col h-full"
+                      >
+                        <div className="flex items-center gap-3 mb-3 flex-grow">
+                          <div className="bg-purple-500/20 rounded-lg p-2">
+                            <Wallet className="h-5 w-5 text-purple-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-white font-medium">Ultra Times Wallet</h3>
+                            <p className="text-xs text-gray-400">Transfert instantané</p>
+                          </div>
+                        </div>
+                        <Button 
+                          className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-auto"
+                          onClick={() => setIsTransferModalOpen(true)}
+                        >
+                          {isAuthenticated ? 'Transférer UOS' : 'Connecter Wallet'}
+                        </Button>
+                      </motion.div>
+
+                      {/* Carte bancaire */}
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-xl p-4 border border-green-500/20 cursor-pointer hover:border-green-400/40 transition-all flex flex-col h-full"
+                      >
+                        <div className="flex items-center gap-3 mb-3 flex-grow">
+                          <div className="bg-green-500/20 rounded-lg p-2">
+                            <Coins className="h-5 w-5 text-green-400" />
+                          </div>
+                          <div>
+                            <h3 className="text-white font-medium">Carte Bancaire</h3>
+                            <p className="text-xs text-gray-400">Achat sécurisé</p>
+                          </div>
+                        </div>
+                        <Button 
+                          className="w-full bg-green-600 hover:bg-green-700 text-white mt-auto"
+                          onClick={() => setIsPurchaseModalOpen(true)}
+                        >
+                          Acheter UOS
+                        </Button>
+                      </motion.div>
+                    </div>
+
+                    {/* Historique récent */}
+                    <div>
+                      <h4 className="text-white font-medium mb-3">Historique récent</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 bg-green-400 rounded-full" />
+                            <div>
+                              <p className="text-white text-sm">Achat par carte</p>
+                              <p className="text-xs text-gray-400">Il y a 2 jours</p>
+                            </div>
+                          </div>
+                          <span className="text-green-400 font-medium">+500 UOS</span>
+                        </div>
+                        <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                            <div>
+                              <p className="text-white text-sm">Transfert wallet</p>
+                              <p className="text-xs text-gray-400">Il y a 1 semaine</p>
+                            </div>
+                          </div>
+                          <span className="text-blue-400 font-medium">+1000 UOS</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* Activité récente */}
                 <Card className="bg-black/40 backdrop-blur-xl border-white/10">
                   <CardHeader>
@@ -454,6 +560,18 @@ export default function ProfilePage() {
           </motion.div>
         </div>
       </div>
+
+      {/* Modales */}
+      <TransferUOSModal
+        isOpen={isTransferModalOpen}
+        onClose={() => setIsTransferModalOpen(false)}
+        currentBalance={profile.uosBalance}
+      />
+      
+      <PurchaseUOSModal
+        isOpen={isPurchaseModalOpen}
+        onClose={() => setIsPurchaseModalOpen(false)}
+      />
     </PageLayout>
   )
 } 

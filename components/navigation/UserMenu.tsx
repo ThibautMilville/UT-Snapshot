@@ -52,13 +52,7 @@ export function UserMenu() {
             {t('nav.profile')}
           </DropdownMenuItem>
         </Link>
-        
-        <Link href={ROUTES.DASHBOARD}>
-          <DropdownMenuItem className="hover:bg-white/10 text-white">
-            <Settings className="mr-2 h-4 w-4" />
-            {t('nav.dashboard')}
-          </DropdownMenuItem>
-        </Link>
+
         
         <Link href={ROUTES.HISTORY}>
           <DropdownMenuItem className="hover:bg-white/10 text-white">

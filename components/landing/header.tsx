@@ -5,9 +5,11 @@ import Collaborators from './collaborators';
 import { useAuth } from "@/contexts/AuthContext";
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useTranslation } from '@/contexts/TranslationContext';
 
 const Header = () => {
     const { isAuthenticated, isConnecting, connectWallet } = useAuth();
+    const { t } = useTranslation();
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -184,40 +186,40 @@ const Header = () => {
                                             </>
                                         ) : (
                                             <>
-                                                <Wallet size={20} />
+                                                <Wallet className="w-5 h-5" />
                                                 <span>Connect Ultra Wallet</span>
                                             </>
                                         )}
                                     </motion.button>
                                     
-                                    <motion.button 
-                                        className="group relative bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3"
-                                        onClick={connectWallet}
-                                        disabled={isConnecting}
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <Camera size={20} />
-                                        <span>Try Demo</span>
-                                    </motion.button>
+                                    <Link href="/snapshots">
+                                        <motion.button 
+                                            className="group relative bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3"
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                        >
+                                            <Camera className="w-5 h-5" />
+                                            <span>Try Demo</span>
+                                        </motion.button>
+                                    </Link>
                                 </>
                             ) : (
                                 <>
-                                    <Link href="/dashboard" className="w-full sm:w-auto">
+                                    <Link href="/snapshots">
                                         <motion.button 
-                                            className="w-full group relative bg-gradient-to-r from-secondary to-purple-600 hover:from-secondary/90 hover:to-purple-600/90 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(172,70,231,0.3)] hover:shadow-[0_0_40px_rgba(172,70,231,0.5)] flex items-center justify-center gap-3"
+                                            className="group relative bg-gradient-to-r from-secondary to-purple-600 hover:from-secondary/90 hover:to-purple-600/90 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(172,70,231,0.3)] hover:shadow-[0_0_40px_rgba(172,70,231,0.5)] flex items-center justify-center gap-3"
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
                                             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                            <Wallet size={20} />
-                                            <span>Go to Dashboard</span>
+                                            <Camera size={20} />
+                                            <span>View Snapshots</span>
                                         </motion.button>
                                     </Link>
                                     
-                                    <Link href="/dashboard" className="w-full sm:w-auto">
+                                    <Link href="/snapshots">
                                         <motion.button 
-                                            className="w-full group relative bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3"
+                                            className="group relative bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-2xl font-semibold border border-white/20 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3"
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
                                         >
@@ -231,7 +233,7 @@ const Header = () => {
 
                         {/* Stats */}
                         <motion.div 
-                            className="flex flex-wrap gap-8 justify-center lg:justify-start pt-8"
+                            className="flex flex-wrap gap-6 md:gap-8 justify-center lg:justify-start pt-8"
                             variants={itemVariants}
                         >
                             {[
@@ -249,13 +251,13 @@ const Header = () => {
 
                     {/* Right Content - Visual */}
                     <motion.div 
-                        className="relative flex justify-center lg:justify-end"
+                        className="relative flex justify-center lg:justify-end mt-12 lg:mt-0"
                         variants={itemVariants}
                     >
                         <div className="relative">
                             {/* Main Image Container */}
                             <motion.div 
-                                className="relative w-80 h-80 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px]"
+                                className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px]"
                                 animate={floatingAnimation}
                             >
                                 {/* Glow Effect */}
@@ -302,7 +304,7 @@ const Header = () => {
 
                                 {/* Floating Cards */}
                                 <motion.div 
-                                    className="absolute -top-8 -left-8 bg-gradient-to-r from-green-500/90 to-emerald-500/90 backdrop-blur-sm rounded-2xl p-4 border border-green-400/30"
+                                    className="absolute -top-4 sm:-top-8 -left-4 sm:-left-8 bg-gradient-to-r from-green-500/90 to-emerald-500/90 backdrop-blur-sm rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-green-400/30"
                                     animate={{
                                         y: [0, -10, 0],
                                         rotate: [0, 2, 0],
@@ -314,14 +316,14 @@ const Header = () => {
                                         delay: 0.5
                                     }}
                                 >
-                                    <div className="flex items-center gap-2 text-white">
-                                        <div className="w-3 h-3 bg-green-300 rounded-full animate-pulse" />
-                                        <span className="text-sm font-semibold">Live Snapshots</span>
+                                    <div className="flex items-center gap-1 sm:gap-2 text-white">
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-300 rounded-full animate-pulse" />
+                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Live Snapshots</span>
                                     </div>
                                 </motion.div>
 
                                 <motion.div 
-                                    className="absolute -bottom-8 -right-8 bg-gradient-to-r from-blue-500/90 to-cyan-500/90 backdrop-blur-sm rounded-2xl p-4 border border-blue-400/30"
+                                    className="absolute -bottom-4 sm:-bottom-8 -right-4 sm:-right-8 bg-gradient-to-r from-blue-500/90 to-cyan-500/90 backdrop-blur-sm rounded-lg sm:rounded-2xl p-2 sm:p-4 border border-blue-400/30"
                                     animate={{
                                         y: [0, 10, 0],
                                         rotate: [0, -2, 0],
@@ -333,9 +335,9 @@ const Header = () => {
                                         delay: 1
                                     }}
                                 >
-                                    <div className="flex items-center gap-2 text-white">
-                                        <div className="w-3 h-3 bg-blue-300 rounded-full animate-pulse" />
-                                        <span className="text-sm font-semibold">Auto Airdrops</span>
+                                    <div className="flex items-center gap-1 sm:gap-2 text-white">
+                                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-300 rounded-full animate-pulse" />
+                                        <span className="text-xs sm:text-sm font-semibold whitespace-nowrap">Auto Airdrops</span>
                                     </div>
                                 </motion.div>
                             </motion.div>

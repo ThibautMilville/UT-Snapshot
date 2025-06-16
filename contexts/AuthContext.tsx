@@ -16,6 +16,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+// Export AuthContext pour pouvoir l'importer dans d'autres fichiers
+export { AuthContext }
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const {
     isInstalled,
