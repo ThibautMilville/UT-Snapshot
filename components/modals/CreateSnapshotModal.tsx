@@ -249,8 +249,6 @@ export function CreateSnapshotModal({ isOpen, onClose, duplicateData }: CreateSn
                       {step === 1 && "Choisir la finalité"}
                       {step === 2 && "Configuration détaillée"}
                       {step === 3 && "Validation finale"}
-                      {/* Debug - remove in production */}
-                      <span className="px-2 py-1 bg-red-500/20 text-red-300 rounded text-xs">DEBUG: step={step}</span>
                     </p>
                   </div>
                 </div>
