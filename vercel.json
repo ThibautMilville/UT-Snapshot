@@ -1,12 +1,8 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "rewrites": [
-    {
-      "source": "/((?!api|_next|_static|_vercel|favicon.ico).*)",
-      "destination": "/"
-    }
-  ],
+  "trailingSlash": false,
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/(.*)",
